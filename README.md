@@ -53,7 +53,7 @@ IDs, hostnames and paths are replaced with placeholders (`USER`, `PROJECT_ID`,
 
 ```bibtex
 @inproceedings{grooten2026augmentation,
-  title     = {How (and How Not) to Use Data Augmentation in {VLA} Post-Training},
+  title     = {{How (and How Not) to Use Data Augmentation in VLA Post-Training}},
   author    = {Grooten, Bram and Vanschoren, Joaquin},
   booktitle = {NeurIPS 2026 Workshop on Post-Training Adaptation of Robot Foundation Models (RoboPAD)},
   year      = {2026}
