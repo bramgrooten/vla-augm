@@ -1,0 +1,722 @@
+[
+  {
+    "task_id": 0,
+    "axis": "textures",
+    "base_task": 0,
+    "base_task_name": "pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate",
+    "sweeps_solved": 6,
+    "sweeps_run": 10,
+    "expect": "ok"
+  },
+  {
+    "task_id": 1,
+    "axis": "textures",
+    "base_task": 0,
+    "base_task_name": "pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate",
+    "sweeps_solved": 10,
+    "sweeps_run": 10,
+    "expect": "ok"
+  },
+  {
+    "task_id": 2,
+    "axis": "textures",
+    "base_task": 0,
+    "base_task_name": "pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate",
+    "sweeps_solved": 6,
+    "sweeps_run": 6,
+    "expect": "ok"
+  },
+  {
+    "task_id": 3,
+    "axis": "textures",
+    "base_task": 0,
+    "base_task_name": "pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate",
+    "sweeps_solved": 6,
+    "sweeps_run": 6,
+    "expect": "ok"
+  },
+  {
+    "task_id": 4,
+    "axis": "textures",
+    "base_task": 0,
+    "base_task_name": "pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate",
+    "sweeps_solved": 6,
+    "sweeps_run": 6,
+    "expect": "ok"
+  },
+  {
+    "task_id": 5,
+    "axis": "textures",
+    "base_task": 0,
+    "base_task_name": "pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate",
+    "sweeps_solved": 6,
+    "sweeps_run": 6,
+    "expect": "ok"
+  },
+  {
+    "task_id": 18,
+    "axis": "textures",
+    "base_task": 0,
+    "base_task_name": "pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate",
+    "sweeps_solved": 0,
+    "sweeps_run": 6,
+    "expect": "fail"
+  },
+  {
+    "task_id": 20,
+    "axis": "textures",
+    "base_task": 0,
+    "base_task_name": "pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate",
+    "sweeps_solved": 1,
+    "sweeps_run": 6,
+    "expect": "fail"
+  },
+  {
+    "task_id": 30,
+    "axis": "textures",
+    "base_task": 1,
+    "base_task_name": "pick_up_the_black_bowl_from_table_center_and_place_it_on_the_plate",
+    "sweeps_solved": 4,
+    "sweeps_run": 5,
+    "expect": "fail"
+  },
+  {
+    "task_id": 32,
+    "axis": "textures",
+    "base_task": 1,
+    "base_task_name": "pick_up_the_black_bowl_from_table_center_and_place_it_on_the_plate",
+    "sweeps_solved": 4,
+    "sweeps_run": 5,
+    "expect": "fail"
+  },
+  {
+    "task_id": 35,
+    "axis": "textures",
+    "base_task": 1,
+    "base_task_name": "pick_up_the_black_bowl_from_table_center_and_place_it_on_the_plate",
+    "sweeps_solved": 3,
+    "sweeps_run": 5,
+    "expect": "fail"
+  },
+  {
+    "task_id": 39,
+    "axis": "textures",
+    "base_task": 1,
+    "base_task_name": "pick_up_the_black_bowl_from_table_center_and_place_it_on_the_plate",
+    "sweeps_solved": 4,
+    "sweeps_run": 5,
+    "expect": "fail"
+  },
+  {
+    "task_id": 62,
+    "axis": "textures",
+    "base_task": 1,
+    "base_task_name": "pick_up_the_black_bowl_from_table_center_and_place_it_on_the_plate",
+    "sweeps_solved": 3,
+    "sweeps_run": 5,
+    "expect": "fail"
+  },
+  {
+    "task_id": 67,
+    "axis": "textures",
+    "base_task": 1,
+    "base_task_name": "pick_up_the_black_bowl_from_table_center_and_place_it_on_the_plate",
+    "sweeps_solved": 3,
+    "sweeps_run": 5,
+    "expect": "fail"
+  },
+  {
+    "task_id": 240,
+    "axis": "textures",
+    "base_task": 8,
+    "base_task_name": "pick_up_the_black_bowl_on_the_stove_and_place_it_on_the_plate",
+    "sweeps_solved": 3,
+    "sweeps_run": 5,
+    "expect": "fail"
+  },
+  {
+    "task_id": 257,
+    "axis": "textures",
+    "base_task": 9,
+    "base_task_name": "pick_up_the_black_bowl_on_the_wooden_cabinet_and_place_it_on_the_plate",
+    "sweeps_solved": 2,
+    "sweeps_run": 5,
+    "expect": "fail"
+  },
+  {
+    "task_id": 609,
+    "axis": "camera",
+    "base_task": 0,
+    "base_task_name": "pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate",
+    "sweeps_solved": 5,
+    "sweeps_run": 5,
+    "expect": "ok"
+  },
+  {
+    "task_id": 610,
+    "axis": "camera",
+    "base_task": 0,
+    "base_task_name": "pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate",
+    "sweeps_solved": 5,
+    "sweeps_run": 5,
+    "expect": "ok"
+  },
+  {
+    "task_id": 612,
+    "axis": "camera",
+    "base_task": 0,
+    "base_task_name": "pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate",
+    "sweeps_solved": 5,
+    "sweeps_run": 5,
+    "expect": "ok"
+  },
+  {
+    "task_id": 614,
+    "axis": "camera",
+    "base_task": 5,
+    "base_task_name": "pick_up_the_black_bowl_next_to_the_ramekin_and_place_it_on_the_plate",
+    "sweeps_solved": 5,
+    "sweeps_run": 5,
+    "expect": "ok"
+  },
+  {
+    "task_id": 616,
+    "axis": "camera",
+    "base_task": 5,
+    "base_task_name": "pick_up_the_black_bowl_next_to_the_ramekin_and_place_it_on_the_plate",
+    "sweeps_solved": 5,
+    "sweeps_run": 5,
+    "expect": "ok"
+  },
+  {
+    "task_id": 618,
+    "axis": "camera",
+    "base_task": 5,
+    "base_task_name": "pick_up_the_black_bowl_next_to_the_ramekin_and_place_it_on_the_plate",
+    "sweeps_solved": 5,
+    "sweeps_run": 5,
+    "expect": "ok"
+  },
+  {
+    "task_id": 691,
+    "axis": "camera",
+    "base_task": 6,
+    "base_task_name": "pick_up_the_black_bowl_on_the_cookie_box_and_place_it_on_the_plate",
+    "sweeps_solved": 0,
+    "sweeps_run": 5,
+    "expect": "fail"
+  },
+  {
+    "task_id": 693,
+    "axis": "camera",
+    "base_task": 6,
+    "base_task_name": "pick_up_the_black_bowl_on_the_cookie_box_and_place_it_on_the_plate",
+    "sweeps_solved": 0,
+    "sweeps_run": 5,
+    "expect": "fail"
+  },
+  {
+    "task_id": 709,
+    "axis": "camera",
+    "base_task": 6,
+    "base_task_name": "pick_up_the_black_bowl_on_the_cookie_box_and_place_it_on_the_plate",
+    "sweeps_solved": 0,
+    "sweeps_run": 5,
+    "expect": "fail"
+  },
+  {
+    "task_id": 713,
+    "axis": "camera",
+    "base_task": 6,
+    "base_task_name": "pick_up_the_black_bowl_on_the_cookie_box_and_place_it_on_the_plate",
+    "sweeps_solved": 0,
+    "sweeps_run": 5,
+    "expect": "fail"
+  },
+  {
+    "task_id": 714,
+    "axis": "camera",
+    "base_task": 6,
+    "base_task_name": "pick_up_the_black_bowl_on_the_cookie_box_and_place_it_on_the_plate",
+    "sweeps_solved": 0,
+    "sweeps_run": 5,
+    "expect": "fail"
+  },
+  {
+    "task_id": 725,
+    "axis": "camera",
+    "base_task": 6,
+    "base_task_name": "pick_up_the_black_bowl_on_the_cookie_box_and_place_it_on_the_plate",
+    "sweeps_solved": 0,
+    "sweeps_run": 5,
+    "expect": "fail"
+  },
+  {
+    "task_id": 729,
+    "axis": "camera",
+    "base_task": 6,
+    "base_task_name": "pick_up_the_black_bowl_on_the_cookie_box_and_place_it_on_the_plate",
+    "sweeps_solved": 0,
+    "sweeps_run": 5,
+    "expect": "fail"
+  },
+  {
+    "task_id": 735,
+    "axis": "camera",
+    "base_task": 2,
+    "base_task_name": "pick_up_the_black_bowl_in_the_top_drawer_of_the_wooden_cabinet_and_place_it_on_the_plate",
+    "sweeps_solved": 0,
+    "sweeps_run": 5,
+    "expect": "fail"
+  },
+  {
+    "task_id": 736,
+    "axis": "camera",
+    "base_task": 2,
+    "base_task_name": "pick_up_the_black_bowl_in_the_top_drawer_of_the_wooden_cabinet_and_place_it_on_the_plate",
+    "sweeps_solved": 0,
+    "sweeps_run": 5,
+    "expect": "fail"
+  },
+  {
+    "task_id": 737,
+    "axis": "camera",
+    "base_task": 2,
+    "base_task_name": "pick_up_the_black_bowl_in_the_top_drawer_of_the_wooden_cabinet_and_place_it_on_the_plate",
+    "sweeps_solved": 0,
+    "sweeps_run": 5,
+    "expect": "fail"
+  },
+  {
+    "task_id": 1375,
+    "axis": "noise",
+    "base_task": 0,
+    "base_task_name": "pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate",
+    "sweeps_solved": 5,
+    "sweeps_run": 5,
+    "expect": "ok"
+  },
+  {
+    "task_id": 1377,
+    "axis": "noise",
+    "base_task": 0,
+    "base_task_name": "pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate",
+    "sweeps_solved": 5,
+    "sweeps_run": 5,
+    "expect": "ok"
+  },
+  {
+    "task_id": 1379,
+    "axis": "noise",
+    "base_task": 0,
+    "base_task_name": "pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate",
+    "sweeps_solved": 5,
+    "sweeps_run": 5,
+    "expect": "ok"
+  },
+  {
+    "task_id": 1380,
+    "axis": "noise",
+    "base_task": 0,
+    "base_task_name": "pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate",
+    "sweeps_solved": 5,
+    "sweeps_run": 5,
+    "expect": "ok"
+  },
+  {
+    "task_id": 1382,
+    "axis": "noise",
+    "base_task": 0,
+    "base_task_name": "pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate",
+    "sweeps_solved": 5,
+    "sweeps_run": 5,
+    "expect": "ok"
+  },
+  {
+    "task_id": 1383,
+    "axis": "noise",
+    "base_task": 0,
+    "base_task_name": "pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate",
+    "sweeps_solved": 5,
+    "sweeps_run": 5,
+    "expect": "ok"
+  },
+  {
+    "task_id": 1419,
+    "axis": "noise",
+    "base_task": 5,
+    "base_task_name": "pick_up_the_black_bowl_next_to_the_ramekin_and_place_it_on_the_plate",
+    "sweeps_solved": 0,
+    "sweeps_run": 5,
+    "expect": "fail"
+  },
+  {
+    "task_id": 1420,
+    "axis": "noise",
+    "base_task": 5,
+    "base_task_name": "pick_up_the_black_bowl_next_to_the_ramekin_and_place_it_on_the_plate",
+    "sweeps_solved": 0,
+    "sweeps_run": 5,
+    "expect": "fail"
+  },
+  {
+    "task_id": 1426,
+    "axis": "noise",
+    "base_task": 5,
+    "base_task_name": "pick_up_the_black_bowl_next_to_the_ramekin_and_place_it_on_the_plate",
+    "sweeps_solved": 0,
+    "sweeps_run": 5,
+    "expect": "fail"
+  },
+  {
+    "task_id": 1431,
+    "axis": "noise",
+    "base_task": 5,
+    "base_task_name": "pick_up_the_black_bowl_next_to_the_ramekin_and_place_it_on_the_plate",
+    "sweeps_solved": 0,
+    "sweeps_run": 5,
+    "expect": "fail"
+  },
+  {
+    "task_id": 1486,
+    "axis": "noise",
+    "base_task": 6,
+    "base_task_name": "pick_up_the_black_bowl_on_the_cookie_box_and_place_it_on_the_plate",
+    "sweeps_solved": 0,
+    "sweeps_run": 5,
+    "expect": "fail"
+  },
+  {
+    "task_id": 1488,
+    "axis": "noise",
+    "base_task": 6,
+    "base_task_name": "pick_up_the_black_bowl_on_the_cookie_box_and_place_it_on_the_plate",
+    "sweeps_solved": 0,
+    "sweeps_run": 5,
+    "expect": "fail"
+  },
+  {
+    "task_id": 1491,
+    "axis": "noise",
+    "base_task": 6,
+    "base_task_name": "pick_up_the_black_bowl_on_the_cookie_box_and_place_it_on_the_plate",
+    "sweeps_solved": 0,
+    "sweeps_run": 5,
+    "expect": "fail"
+  },
+  {
+    "task_id": 1492,
+    "axis": "noise",
+    "base_task": 6,
+    "base_task_name": "pick_up_the_black_bowl_on_the_cookie_box_and_place_it_on_the_plate",
+    "sweeps_solved": 0,
+    "sweeps_run": 5,
+    "expect": "fail"
+  },
+  {
+    "task_id": 1512,
+    "axis": "noise",
+    "base_task": 2,
+    "base_task_name": "pick_up_the_black_bowl_in_the_top_drawer_of_the_wooden_cabinet_and_place_it_on_the_plate",
+    "sweeps_solved": 0,
+    "sweeps_run": 5,
+    "expect": "fail"
+  },
+  {
+    "task_id": 1517,
+    "axis": "noise",
+    "base_task": 2,
+    "base_task_name": "pick_up_the_black_bowl_in_the_top_drawer_of_the_wooden_cabinet_and_place_it_on_the_plate",
+    "sweeps_solved": 0,
+    "sweeps_run": 5,
+    "expect": "fail"
+  },
+  {
+    "task_id": 1725,
+    "axis": "layout",
+    "base_task": 0,
+    "base_task_name": "pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate",
+    "sweeps_solved": 5,
+    "sweeps_run": 5,
+    "expect": "ok"
+  },
+  {
+    "task_id": 1727,
+    "axis": "layout",
+    "base_task": 0,
+    "base_task_name": "pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate",
+    "sweeps_solved": 5,
+    "sweeps_run": 5,
+    "expect": "ok"
+  },
+  {
+    "task_id": 1728,
+    "axis": "layout",
+    "base_task": 0,
+    "base_task_name": "pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate",
+    "sweeps_solved": 5,
+    "sweeps_run": 5,
+    "expect": "ok"
+  },
+  {
+    "task_id": 1729,
+    "axis": "layout",
+    "base_task": 0,
+    "base_task_name": "pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate",
+    "sweeps_solved": 5,
+    "sweeps_run": 5,
+    "expect": "ok"
+  },
+  {
+    "task_id": 1730,
+    "axis": "layout",
+    "base_task": 0,
+    "base_task_name": "pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate",
+    "sweeps_solved": 1,
+    "sweeps_run": 5,
+    "expect": "fail"
+  },
+  {
+    "task_id": 1731,
+    "axis": "layout",
+    "base_task": 0,
+    "base_task_name": "pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate",
+    "sweeps_solved": 5,
+    "sweeps_run": 5,
+    "expect": "ok"
+  },
+  {
+    "task_id": 1732,
+    "axis": "layout",
+    "base_task": 0,
+    "base_task_name": "pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate",
+    "sweeps_solved": 5,
+    "sweeps_run": 5,
+    "expect": "ok"
+  },
+  {
+    "task_id": 1750,
+    "axis": "layout",
+    "base_task": 0,
+    "base_task_name": "pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate",
+    "sweeps_solved": 1,
+    "sweeps_run": 5,
+    "expect": "fail"
+  },
+  {
+    "task_id": 1850,
+    "axis": "layout",
+    "base_task": 2,
+    "base_task_name": "pick_up_the_black_bowl_in_the_top_drawer_of_the_wooden_cabinet_and_place_it_on_the_plate",
+    "sweeps_solved": 1,
+    "sweeps_run": 5,
+    "expect": "fail"
+  },
+  {
+    "task_id": 1871,
+    "axis": "layout",
+    "base_task": 3,
+    "base_task_name": "pick_up_the_black_bowl_next_to_the_cookie_box_and_place_it_on_the_plate",
+    "sweeps_solved": 1,
+    "sweeps_run": 5,
+    "expect": "fail"
+  },
+  {
+    "task_id": 1900,
+    "axis": "layout",
+    "base_task": 4,
+    "base_task_name": "pick_up_the_black_bowl_next_to_the_plate_and_place_it_on_the_plate",
+    "sweeps_solved": 1,
+    "sweeps_run": 5,
+    "expect": "fail"
+  },
+  {
+    "task_id": 1907,
+    "axis": "layout",
+    "base_task": 4,
+    "base_task_name": "pick_up_the_black_bowl_next_to_the_plate_and_place_it_on_the_plate",
+    "sweeps_solved": 1,
+    "sweeps_run": 5,
+    "expect": "fail"
+  },
+  {
+    "task_id": 1908,
+    "axis": "layout",
+    "base_task": 4,
+    "base_task_name": "pick_up_the_black_bowl_next_to_the_plate_and_place_it_on_the_plate",
+    "sweeps_solved": 0,
+    "sweeps_run": 5,
+    "expect": "fail"
+  },
+  {
+    "task_id": 1910,
+    "axis": "layout",
+    "base_task": 4,
+    "base_task_name": "pick_up_the_black_bowl_next_to_the_plate_and_place_it_on_the_plate",
+    "sweeps_solved": 1,
+    "sweeps_run": 5,
+    "expect": "fail"
+  },
+  {
+    "task_id": 1946,
+    "axis": "layout",
+    "base_task": 5,
+    "base_task_name": "pick_up_the_black_bowl_next_to_the_ramekin_and_place_it_on_the_plate",
+    "sweeps_solved": 1,
+    "sweeps_run": 5,
+    "expect": "fail"
+  },
+  {
+    "task_id": 1947,
+    "axis": "layout",
+    "base_task": 5,
+    "base_task_name": "pick_up_the_black_bowl_next_to_the_ramekin_and_place_it_on_the_plate",
+    "sweeps_solved": 0,
+    "sweeps_run": 5,
+    "expect": "fail"
+  },
+  {
+    "task_id": 2111,
+    "axis": "lighting",
+    "base_task": 0,
+    "base_task_name": "pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate",
+    "sweeps_solved": 5,
+    "sweeps_run": 5,
+    "expect": "ok"
+  },
+  {
+    "task_id": 2112,
+    "axis": "lighting",
+    "base_task": 0,
+    "base_task_name": "pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate",
+    "sweeps_solved": 5,
+    "sweeps_run": 5,
+    "expect": "ok"
+  },
+  {
+    "task_id": 2113,
+    "axis": "lighting",
+    "base_task": 0,
+    "base_task_name": "pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate",
+    "sweeps_solved": 5,
+    "sweeps_run": 5,
+    "expect": "ok"
+  },
+  {
+    "task_id": 2114,
+    "axis": "lighting",
+    "base_task": 0,
+    "base_task_name": "pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate",
+    "sweeps_solved": 1,
+    "sweeps_run": 5,
+    "expect": "fail"
+  },
+  {
+    "task_id": 2115,
+    "axis": "lighting",
+    "base_task": 0,
+    "base_task_name": "pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate",
+    "sweeps_solved": 5,
+    "sweeps_run": 5,
+    "expect": "ok"
+  },
+  {
+    "task_id": 2116,
+    "axis": "lighting",
+    "base_task": 0,
+    "base_task_name": "pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate",
+    "sweeps_solved": 5,
+    "sweeps_run": 5,
+    "expect": "ok"
+  },
+  {
+    "task_id": 2117,
+    "axis": "lighting",
+    "base_task": 0,
+    "base_task_name": "pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate",
+    "sweeps_solved": 5,
+    "sweeps_run": 5,
+    "expect": "ok"
+  },
+  {
+    "task_id": 2134,
+    "axis": "lighting",
+    "base_task": 0,
+    "base_task_name": "pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate",
+    "sweeps_solved": 1,
+    "sweeps_run": 5,
+    "expect": "fail"
+  },
+  {
+    "task_id": 2136,
+    "axis": "lighting",
+    "base_task": 0,
+    "base_task_name": "pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate",
+    "sweeps_solved": 1,
+    "sweeps_run": 5,
+    "expect": "fail"
+  },
+  {
+    "task_id": 2146,
+    "axis": "lighting",
+    "base_task": 0,
+    "base_task_name": "pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate",
+    "sweeps_solved": 1,
+    "sweeps_run": 5,
+    "expect": "fail"
+  },
+  {
+    "task_id": 2178,
+    "axis": "lighting",
+    "base_task": 1,
+    "base_task_name": "pick_up_the_black_bowl_from_table_center_and_place_it_on_the_plate",
+    "sweeps_solved": 3,
+    "sweeps_run": 5,
+    "expect": "fail"
+  },
+  {
+    "task_id": 2220,
+    "axis": "lighting",
+    "base_task": 2,
+    "base_task_name": "pick_up_the_black_bowl_in_the_top_drawer_of_the_wooden_cabinet_and_place_it_on_the_plate",
+    "sweeps_solved": 3,
+    "sweeps_run": 5,
+    "expect": "fail"
+  },
+  {
+    "task_id": 2259,
+    "axis": "lighting",
+    "base_task": 3,
+    "base_task_name": "pick_up_the_black_bowl_next_to_the_cookie_box_and_place_it_on_the_plate",
+    "sweeps_solved": 3,
+    "sweeps_run": 5,
+    "expect": "fail"
+  },
+  {
+    "task_id": 2273,
+    "axis": "lighting",
+    "base_task": 3,
+    "base_task_name": "pick_up_the_black_bowl_next_to_the_cookie_box_and_place_it_on_the_plate",
+    "sweeps_solved": 3,
+    "sweeps_run": 5,
+    "expect": "fail"
+  },
+  {
+    "task_id": 2277,
+    "axis": "lighting",
+    "base_task": 4,
+    "base_task_name": "pick_up_the_black_bowl_next_to_the_plate_and_place_it_on_the_plate",
+    "sweeps_solved": 1,
+    "sweeps_run": 5,
+    "expect": "fail"
+  },
+  {
+    "task_id": 2399,
+    "axis": "lighting",
+    "base_task": 9,
+    "base_task_name": "pick_up_the_black_bowl_on_the_wooden_cabinet_and_place_it_on_the_plate",
+    "sweeps_solved": 1,
+    "sweeps_run": 5,
+    "expect": "fail"
+  }
+]

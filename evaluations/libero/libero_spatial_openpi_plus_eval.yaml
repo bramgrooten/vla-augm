@@ -1,0 +1,88 @@
+# pi0 (OpenPI) evaluated on LIBERO-Plus (OOD generalization).
+#
+# Loads an RL-trained pi0 checkpoint (runner.ckpt_path -> full_weights.pt) on top
+# of the SFT base model and rolls it out on the LIBERO-Plus perturbation suite.
+# LIBERO-Plus is selected via LIBERO_TYPE=plus + LIBERO_SUFFIX (set in the eval
+# sbatch, or env.eval.libero_variant below). Results log to wandb as eval/*.
+#
+# NOTE: with LIBERO_TYPE=plus the env ignores task_suite_name and enumerates the
+# unified LIBERO-Plus benchmark (all base suites x 7 OOD axes), so this measures
+# OOD robustness of the checkpoint holistically, not spatial-only perturbation.
+defaults:
+  - env/libero_spatial@env.eval
+  - model/pi0@rollout.model
+  - override hydra/job_logging: stdout
+
+hydra:
+  run:
+    dir: .
+  output_subdir: null
+  searchpath:
+    - file://${oc.env:EMBODIED_PATH}/config/
+
+cluster:
+  num_nodes: 1
+  component_placement:
+    env,rollout: all
+
+runner:
+  task_type: embodied_eval
+  logger:
+    log_path: "../results"
+    project_name: rl_inf
+    experiment_name: "libero_spatial_plus_openpi_eval"
+    logger_backends: ["wandb"]
+
+  max_epochs: 1000
+  max_steps: -1
+
+  only_eval: True
+  val_check_interval: -1
+  save_interval: -1
+
+  resume_dir: null
+  # RL-trained pi0 checkpoint to evaluate (a torch-loadable full_weights.pt).
+  # This is the spatial run that resumed to epoch 500.
+  ckpt_path: "/scratch/USER/pi0_ckpts/pi0_spatial_rl_step500.pt"
+
+env:
+  group_name: "EnvGroup"
+
+  eval:
+    # Redundant with LIBERO_TYPE=plus env var; kept so the config is self-describing.
+    libero_variant: plus
+    # Full-suite eval: LIBERO-Plus (all) has 2402 tasks. The eval reset pool is
+    # task-major interleaved, so the first 2402 draws = one trial per task. With
+    # 32 envs, one epoch runs one episode per env (32 trajectories), so
+    # ceil(2402/32)=76 epochs sweep every task once. Raise for more trials/task;
+    # if you change total_num_envs, recompute this as ceil(2402/total_num_envs).
+    rollout_epoch: 76
+    # All envs run on one GPU (32 EGL/mujoco subprocess envs per H100). Do not
+    # raise past ~32 here — see the eval sbatch's MAX_ARG_STRLEN note.
+    total_num_envs: 32
+    auto_reset: True
+    ignore_terminations: True
+    max_episode_steps: 320
+    max_steps_per_rollout_epoch: 320
+    group_size: 1
+    use_fixed_reset_state_ids: True
+    is_eval: True
+    video_cfg:
+      # Off for the full 2432-episode sweep — saving that many videos floods the
+      # shared project disk. Flip to True (and drop rollout_epoch) to inspect rollouts.
+      save_video: False
+      video_base_dir: ${runner.logger.log_path}/video/eval
+
+rollout:
+  group_name: "RolloutGroup"
+  generation_backend: "huggingface"
+  recompute_logprobs: False
+  enable_offload: False
+  pipeline_stage_num: 2
+
+  model:
+    model_path: "/scratch/USER/rl_inf/models/RLinf-Pi0-LIBERO-Spatial-Object-Goal-SFT"
+    num_action_chunks: 5
+    # The RL checkpoint carries value_head.* keys (PPO critic); build the head so
+    # the strict load_state_dict matches. It is unused during action rollout.
+    add_value_head: True

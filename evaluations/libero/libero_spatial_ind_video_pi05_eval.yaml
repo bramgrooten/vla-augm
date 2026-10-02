@@ -1,0 +1,94 @@
+# The unperturbed twins for the video reel: same arm, same base tasks, standard
+# LIBERO-Spatial. Pairs with libero_spatial_plus_video_pi05_eval.yaml so the
+# figure can put "normal texture" next to "OOD texture".
+#
+# The correspondence is real, not approximate. A LIBERO-Plus task is named
+# "<base task>_<perturbation>" and its init states come from the BASE task's
+# .init file -- liberoplus ships no per-variant init files -- so the perturbed
+# episode and this one start from the same object layout and carry the same
+# language instruction. Only the perturbation differs.
+#
+# Five tasks, not fifty: one per axis, because the selector now pins each axis
+# to its own base task. Every perturbed clip pairs with the twin of its base, so
+# ten twins per axis would be forty-five repeats of five clips.
+defaults:
+  - env/libero_spatial@env.eval
+  - model/pi0_5@rollout.model
+  - override hydra/job_logging: stdout
+
+hydra:
+  run:
+    dir: .
+  output_subdir: null
+  searchpath:
+    - file://${oc.env:EMBODIED_PATH}/config/
+
+cluster:
+  num_nodes: 1
+  component_placement:
+    env,rollout: all
+
+runner:
+  task_type: embodied_eval
+  logger:
+    log_path: "../results"
+    project_name: rl_inf
+    experiment_name: "libero_spatial_ind_video_pi05_eval"
+    logger_backends: ["wandb"]
+
+  max_epochs: 1000
+  max_steps: -1
+
+  only_eval: True
+  val_check_interval: -1
+  save_interval: -1
+
+  resume_dir: null
+  # Same seed as the perturbed run: the flow prior is pinned identically, so the
+  # pair differs by the perturbation rather than by the sampling draw.
+  eval_seed: 12345
+  ckpt_path: "/projects/PROJECT_ID/users/USER/rl_inf/ckpts/20260808-10:38:51-libero_spatial_ppo_pi05_4gpu-augm_critic_only_ovl_alpha05-seed52/libero_spatial_ppo_pi05_4gpu_lr5e-6_augm_critic_only_ovl_alpha05_seed52/checkpoints/global_step_300/actor/model_state_dict/full_weights.pt"
+
+env:
+  group_name: "EnvGroup"
+
+  eval:
+    # Standard suite: no libero_variant, and the sbatch sets LIBERO_TYPE=standard.
+    rollout_epoch: 9
+    total_num_envs: 1
+    auto_reset: True
+    ignore_terminations: True
+    # 320, matching the perturbed run, so the two clips are the same length
+    # budget and a failure means the same thing in both.
+    max_episode_steps: 320
+    max_steps_per_rollout_epoch: 320
+    group_size: 1
+    use_fixed_reset_state_ids: True
+    is_eval: True
+    # The 5 base tasks the 50 perturbed tasks derive from, in standard
+    # LIBERO-Spatial order. Printed by vla_augm/analyze/pick_video_tasks.py.
+    task_id_filter: [0, 1, 2, 3, 4, 5, 6, 8, 9]
+    video_cfg:
+      save_video: True
+      info_on_video: True
+      # See the OOD config: extra_info_on_video hangs the env worker.
+      video_base_dir: "/home/USER/rlinf_videos/liberoplus_critic_a05_ep300_round2"
+      views: ["main", "wrist"]
+      augmentation:
+        bank_path: null
+
+rollout:
+  group_name: "RolloutGroup"
+  generation_backend: "huggingface"
+  recompute_logprobs: False
+  enable_offload: False
+  pipeline_stage_num: 1
+
+  model:
+    model_path: "/scratch/USER/rl_inf/models/RLinf-Pi05-LIBERO-SFT"
+    model_type: "openpi"
+    num_action_chunks: 5
+    num_steps: 3
+    add_value_head: True
+    openpi:
+      value_after_vlm: True

@@ -1,0 +1,106 @@
+# GR00T SFT BASELINE on standard LIBERO-Spatial (IND) -- the epoch-0 point.
+#
+# GR00T counterpart of libero_spatial_ind_pi05_sft_eval.yaml. Settings are copied
+# from what the GR00T seed-52 arms ACTUALLY ran (wandb config of run 5v06nwqx),
+# which differs from pi0.5's in three places, so the two models are each compared
+# against their own protocol rather than a shared one:
+#   rollout_epoch 25 (not 5), total_num_envs 20 (not 104), pipeline_stage_num 1
+#   (not 2). max_episode_steps 240, group_size 1, use_fixed_reset_state_ids True
+#   and eval_seed 12345 are the same.
+#
+# Runs on ONE GPU, unlike the 4-GPU training job: standalone 4-GPU eval hung in
+# LIBERO env construction for both models (jobs 25791707/25791717). 20 x 25 = 500
+# slots covers the single pool exactly here, just as it covered 4 pools of 125
+# during training, so the same 500 (task, trial) pairs are scored either way.
+#
+# The arms trained on Cluster B, where model_path was
+# /project/scratch/PROJECT_ID/vla_augm/rl_inf/models/RLinf-Gr00t-SFT-Spatial. That is
+# the same SFT release as the Cluster A copy used below.
+#
+# NOTE: launches eval_embodied_agent.py DIRECTLY, skipping evaluations/run_eval.sh
+# (its setup_sim_env grows the driver env; see the sbatch's MAX_ARG_STRLEN note).
+defaults:
+  - env/libero_spatial@env.eval
+  - model/gr00t@rollout.model
+  - override hydra/job_logging: stdout
+
+hydra:
+  run:
+    dir: .
+  output_subdir: null
+  searchpath:
+    - file://${oc.env:EMBODIED_PATH}/config/
+
+cluster:
+  num_nodes: 1
+  component_placement:
+    env,rollout: all
+
+runner:
+  task_type: embodied_eval
+  logger:
+    log_path: "../results"
+    project_name: rl_inf
+    experiment_name: "libero_spatial_ind_gr00t_sft_eval"
+    logger_backends: ["wandb"]
+
+  max_epochs: 1000
+  max_steps: -1
+
+  only_eval: True
+  val_check_interval: -1
+  save_interval: -1
+
+  resume_dir: null
+  # Same value the arms trained with.
+  eval_seed: 12345
+  # null = the SFT base weights from rollout.model.model_path. This IS epoch 0.
+  ckpt_path: null
+
+env:
+  group_name: "EnvGroup"
+
+  eval:
+    # 10 envs x 50 epochs = 500 slots = 1 pool of 500, so all 500
+    # (task, trial) pairs are scored exactly once.
+    #
+    # Ten, not the OOD config's twenty-four. GR00T on STANDARD libero (as
+    # opposed to LIBERO-Plus, which the OOD sweeps use) hung past env
+    # construction at both 20 envs/stage-1 and 24/stage-2, never reaching the
+    # rollout loop -- jobs 25824232 and 25846824, one of them for two hours.
+    # A 2-env probe finished in five minutes (job 25883799, 28 s/epoch), so the
+    # limit is scale on this untested path, not the path itself: no GR00T run
+    # had ever evaluated standard LIBERO on this cluster, the arms having
+    # trained on Cluster B.
+    rollout_epoch: 50
+    total_num_envs: 10
+    auto_reset: True
+    ignore_terminations: True
+    max_episode_steps: 240
+    max_steps_per_rollout_epoch: 240
+    group_size: 1
+    use_fixed_reset_state_ids: True
+    is_eval: True
+    video_cfg:
+      save_video: False
+      video_base_dir: ${runner.logger.log_path}/video/eval
+
+rollout:
+  group_name: "RolloutGroup"
+  generation_backend: "huggingface"
+  recompute_logprobs: False
+  enable_offload: False
+  # 1: one pool of 500, covered exactly by 10 x 50.
+  pipeline_stage_num: 1
+
+  model:
+    model_path: "/scratch/USER/models/RLinf-Gr00t-SFT-Spatial"
+    # True even though the SFT base has no critic, because GR00T's rollout path
+    # calls the value branch unconditionally (gr00t_action_model.py:318 ->
+    # get_value -> self.value_head) and False dies with "object has no attribute
+    # 'value_head'". The head is then randomly initialised, which is harmless:
+    # it feeds only values_vlm, never the flow-matching action prediction, so
+    # success rates are untouched. The OOD yaml says False but never runs that
+    # way -- eval_ood_ckpt.sh overrides it to True for gr00t. pi0.5 guards the
+    # call and genuinely keeps False.
+    add_value_head: True

@@ -1,0 +1,97 @@
+# GR00T N1.5 on LIBERO-Plus (OOD). The GR00T counterpart of
+# libero_spatial_openpi_pi05_plus_eval.yaml, used to score the augmentation-grid
+# snapshots that trained on Cluster B.
+#
+# ckpt_path below is null = SFT base. Set it (+ add_value_head) to score RL.
+# LIBERO-Plus selected via LIBERO_TYPE=plus + LIBERO_SUFFIX (eval sbatch, or
+# env.eval.libero_variant below).
+#
+# NOTE: with LIBERO_TYPE=plus the env ignores task_suite_name and enumerates the
+# whole LIBERO-Plus benchmark (all base suites x 7 OOD axes), not spatial only.
+# Despite the filename this is a full-benchmark sweep.
+defaults:
+  - env/libero_spatial@env.eval
+  - model/gr00t@rollout.model
+  - override hydra/job_logging: stdout
+
+hydra:
+  run:
+    dir: .
+  output_subdir: null
+  searchpath:
+    - file://${oc.env:EMBODIED_PATH}/config/
+
+cluster:
+  num_nodes: 1
+  component_placement:
+    env,rollout: all
+
+runner:
+  task_type: embodied_eval
+  logger:
+    log_path: "../results"
+    project_name: rl_inf
+    experiment_name: "libero_spatial_plus_gr00t_eval"
+    logger_backends: ["wandb"]
+
+  max_epochs: 1000
+  max_steps: -1
+
+  only_eval: True
+  val_check_interval: -1
+  save_interval: -1
+
+  resume_dir: null
+  # null evaluates the SFT base model. Point at a
+  # .../checkpoints/global_step_<N>/actor/model_state_dict/full_weights.pt
+  # to score an RL-trained checkpoint instead (then set add_value_head below).
+  ckpt_path: null
+
+env:
+  group_name: "EnvGroup"
+
+  eval:
+    # Redundant with LIBERO_TYPE=plus env var; kept so the config is self-describing.
+    libero_variant: plus
+    # Full-suite eval: LIBERO-Plus (all) has 2402 tasks. The eval reset pool is
+    # task-major interleaved, so the first 2402 draws = one trial per task. With
+    # 24 envs, one epoch runs one episode per env, so ceil(2402/24)=101 epochs
+    # sweep every task once. eval_ood_ckpt.sh recomputes this when it restricts
+    # the sweep to the 5 visual axes (1662 tasks -> 70 epochs).
+    rollout_epoch: 101
+    # 24, not the 32 the pi0.5 config started with: at 32 a sweep peaked at
+    # 195 GB against the 180 GB a single-GPU share gets (job 25474720).
+    # Must stay divisible by rollout.pipeline_stage_num.
+    total_num_envs: 24
+    auto_reset: True
+    ignore_terminations: True
+    # 240, not pi0.5's 320: this is what the GR00T arms trained and evaluated
+    # with, so their OOD numbers stay comparable to their own training curves.
+    max_episode_steps: 240
+    max_steps_per_rollout_epoch: 240
+    group_size: 1
+    use_fixed_reset_state_ids: True
+    is_eval: True
+    video_cfg:
+      # Off for the full 2402-episode sweep — saving that many videos floods the
+      # shared project disk. Flip to True (and drop rollout_epoch) to inspect rollouts.
+      save_video: False
+      video_base_dir: ${runner.logger.log_path}/video/eval
+
+rollout:
+  group_name: "RolloutGroup"
+  generation_backend: "huggingface"
+  recompute_logprobs: False
+  enable_offload: False
+  # The GR00T training config runs stage 1, but only because its 4-GPU eval of
+  # 500 episodes has no 2-way split that keeps batch_size divisible by
+  # src_world_size. Here world_size is 1 and 24 envs split cleanly into 12, so
+  # stage 2 is safe and buys ~13% wall time.
+  pipeline_stage_num: 2
+
+  model:
+    model_path: "/scratch/USER/models/RLinf-Gr00t-SFT-Spatial"
+    # False for the SFT base, which has no critic. Set True (and set
+    # runner.ckpt_path) when scoring an RL checkpoint: it carries value_head.*
+    # keys, so the head must exist for the strict load_state_dict to match.
+    add_value_head: False

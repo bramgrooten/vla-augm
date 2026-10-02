@@ -1,0 +1,105 @@
+# pi0.5 SFT BASELINE on standard LIBERO-Spatial (IND) -- the epoch-0 point.
+#
+# Fills the "IND eval" cell for epoch 0 in the results table. Every setting under
+# env.eval and rollout is copied from what the seed-52 arms ACTUALLY ran (read
+# back from the wandb config of run i2h16jg0, not from the training YAML), so
+# this number is directly comparable to their in-run eval/success_once:
+#   max_episode_steps 240, group_size 1, use_fixed_reset_state_ids True,
+#   pipeline_stage_num 2, eval_seed 12345.
+#
+# The env fan-out is deliberately NOT the training one. Training evaluated with
+# 104 envs over 4 GPUs; run standalone that way, both this and the GR00T eval
+# hung during LIBERO env construction and were killed at the walltime with zero
+# output for 56 minutes (jobs 25791707/25791717, on two different nodes). Every
+# standalone eval that has ever completed here -- the whole OOD suite, and the
+# older pi0 IND eval -- is single-GPU, so this is single-GPU too.
+#
+# That is safe for comparability because what must match is the SET of episodes,
+# not the fan-out that produces it. The eval deals its 500 (task, trial) pairs
+# round-robin over env_world_size x pipeline_stage_num pools and skips slots past
+# a pool's end, so any (envs, epochs) that covers every pool scores the identical
+# 500 pairs -- and use_fixed_reset_state_ids pins the initial states. 26 x 20
+# covers 2 pools of 250 with 260 slots each, exactly as 104 x 5 covered 8 pools
+# of 63/62. What does differ is the per-episode sampling draw, which is worth
+# less than the measured pi0.5 eval noise floor (0.0025).
+#
+# NOTE: launches eval_embodied_agent.py DIRECTLY, skipping evaluations/run_eval.sh
+# (its setup_sim_env grows the driver env; see the sbatch's MAX_ARG_STRLEN note).
+defaults:
+  - env/libero_spatial@env.eval
+  - model/pi0_5@rollout.model
+  - override hydra/job_logging: stdout
+
+hydra:
+  run:
+    dir: .
+  output_subdir: null
+  searchpath:
+    - file://${oc.env:EMBODIED_PATH}/config/
+
+cluster:
+  num_nodes: 1
+  component_placement:
+    env,rollout: all
+
+runner:
+  task_type: embodied_eval
+  logger:
+    log_path: "../results"
+    project_name: rl_inf
+    experiment_name: "libero_spatial_ind_pi05_sft_eval"
+    logger_backends: ["wandb"]
+
+  max_epochs: 1000
+  max_steps: -1
+
+  only_eval: True
+  val_check_interval: -1
+  save_interval: -1
+
+  resume_dir: null
+  # Same value the arms trained with; pins the flow-matching prior x_T so the
+  # baseline is drawn from the same noise as the checkpoints it is compared to.
+  eval_seed: 12345
+  # null = the SFT base weights from rollout.model.model_path. This IS epoch 0.
+  ckpt_path: null
+
+env:
+  group_name: "EnvGroup"
+
+  eval:
+    # Standard libero_spatial: 10 tasks x 50 trials = 500 pairs. 26 envs x 20
+    # epochs = 520 slots, dealt over env world size (1) x pipeline_stage_num (2)
+    # = 2 pools of 250, and 13 envs x 20 epochs = 260 slots per pool covers each
+    # pool. Slots past the end of a pool are skipped, not rerun, so nothing is
+    # double-counted. total_num_envs must stay divisible by 1 x 2.
+    rollout_epoch: 20
+    total_num_envs: 26
+    auto_reset: True
+    ignore_terminations: True
+    max_episode_steps: 240
+    max_steps_per_rollout_epoch: 240
+    group_size: 1
+    use_fixed_reset_state_ids: True
+    is_eval: True
+    video_cfg:
+      save_video: False
+      video_base_dir: ${runner.logger.log_path}/video/eval
+
+rollout:
+  group_name: "RolloutGroup"
+  generation_backend: "huggingface"
+  recompute_logprobs: False
+  enable_offload: False
+  # 2, matching the arms.
+  pipeline_stage_num: 2
+
+  model:
+    model_path: "/scratch/USER/rl_inf/models/RLinf-Pi05-LIBERO-SFT"
+    model_type: "openpi"
+    num_action_chunks: 5
+    num_steps: 3
+    # False: the SFT base has no critic. The RL checkpoints need True.
+    add_value_head: False
+    openpi:
+      value_after_vlm: True

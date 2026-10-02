@@ -1,0 +1,19 @@
+run_name	model	benchmark	augm	placement	alpha	lr	seed		server	wandb link(s)	latest epoch	ckpts saved	ckpts evaluated	remarks	train success	IND eval	OOD 5axes @300	OOD all7 @300	OOD 5axes @100	ckpt path (global_step_<N> subdirs)
+augm_none-seed52	pi0.5	libero-spatial	none			5e-6	52				299	12 (ep25..300)	12 (ep25..300; only ep300 is full 7-axis)		0.859	0.932	0.740	0.674	0.651	
+augm_critic_only_ovl_alpha05-seed52	pi0.5	libero-spatial	overlay	critic-only	0.5	5e-6	52				307	12 (ep25..300)	12 (ep25..300; only ep300 is full 7-axis)		0.885	0.980	0.823	0.756	0.673	
+augm_critic_only_ovl_alpha01-seed52	pi0.5	libero-spatial	overlay	critic-only	0.1	5e-6	52				299	12 (ep25..300)	12 (ep25..300; only ep300 is full 7-axis)		0.885	0.960	0.781	0.718	0.694	
+augm_critic_only_ovl_alpha025-seed52	pi0.5	libero-spatial	overlay	critic-only	0.25	5e-6	52				299	12 (ep25..300)	12 (ep25..300; only ep300 is full 7-axis)		0.848	0.938	0.775	0.712	0.643	
+augm_critic_only_ovl_alpha075-seed52	pi0.5	libero-spatial	overlay	critic-only	0.75	5e-6	52				299	12 (ep25..300)	12 (ep25..300; only ep300 is full 7-axis)		0.889	0.948	0.812	0.745	0.680	
+augm_critic_only_ovl_alpha09-seed52	pi0.5	libero-spatial	overlay	critic-only	0.9	5e-6	52				299	12 (ep25..300)	12 (ep25..300; only ep300 is full 7-axis)		0.840	0.932	0.770	0.703	0.717	
+augm_critic_only_shift-seed52	pi0.5	libero-spatial	shift	critic-only		5e-6	52				301	12 (ep25..300)	12 (ep25..300; only ep300 is full 7-axis)		0.873	0.958	0.792	0.725	0.685	
+augm_critic_only_ovlshift_alpha05-seed52	pi0.5	libero-spatial	overlay-shift	critic-only	0.5	5e-6	52				301	12 (ep25..300)	12 (ep25..300; only ep300 is full 7-axis)		0.873	0.936	0.755	0.691	0.646	
+augm_uniform_ovl_alpha05-seed52	pi0.5	libero-spatial	overlay	uniform	0.5	5e-6	52				313	12 (ep25..300)	12 (ep25..300; only ep300 is full 7-axis)		0.000	0.008	0.001	0.002	0.110	
+augm_actor_only_ovl_alpha05-seed52	pi0.5	libero-spatial	overlay	actor-only	0.5	5e-6	52				119	4 (ep25..100)	4 (ep25..100, 5-axis only; NO ep300)		0.231	0.110	n/a	n/a	0.060	
+augm_none-seed52	GR00T	libero-spatial	none			2e-5	52				299	2 pulled (ep100, ep300)	2 (ep100 5-axis, ep300 7-axis)		0.967	0.954	0.570	0.484	0.515	
+augm_critic_only_ovl_alpha025-seed52	GR00T	libero-spatial	overlay	critic-only	0.25	2e-5	52				299	2 pulled (ep100, ep300)	2 (ep100 5-axis, ep300 7-axis)		0.951	0.980	0.642	0.559	0.501	
+augm_critic_only_ovl_alpha05-seed52	GR00T	libero-spatial	overlay	critic-only	0.5	2e-5	52				299	2 pulled (ep100, ep300)	2 (ep100 5-axis, ep300 7-axis)		0.951	0.974	0.584	0.501	0.547	
+augm_critic_only_ovl_alpha075-seed52	GR00T	libero-spatial	overlay	critic-only	0.75	2e-5	52				299	2 pulled (ep100, ep300)	2 (ep100 5-axis, ep300 7-axis)		0.943	0.952	0.581	0.497	0.461	
+augm_critic_only_shift-seed52	GR00T	libero-spatial	shift	critic-only		2e-5	52				299	2 pulled (ep100, ep300)	2 (ep100 5-axis, ep300 7-axis)		0.959	0.964	0.694	0.591	0.539	
+augm_critic_only_ovlshift_alpha05-seed52	GR00T	libero-spatial	overlay-shift	critic-only	0.5	2e-5	52				299	2 pulled (ep100, ep300)	2 (ep100 5-axis, ep300 7-axis)		0.947	0.954	0.598	0.510	0.433	
+augm_actor_only_ovl_alpha05-seed52	GR00T	libero-spatial	overlay	actor-only	0.5	2e-5	52				103	1 pulled (ep100)	1 (ep100, 5-axis only; NO ep300)		0.000	0.000	n/a	n/a	0.000	
+augm_uniform_ovl_alpha05-seed52	GR00T	libero-spatial	overlay	uniform	0.5	2e-5	52				105	1 pulled (ep100)	1 (ep100, 5-axis only; NO ep300)		0.000	0.002	n/a	n/a	0.001	

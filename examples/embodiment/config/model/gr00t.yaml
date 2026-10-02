@@ -1,0 +1,50 @@
+model_type: "gr00t"
+
+# Model path - should be set in specific config files
+model_path: "/path/to/model"
+
+# Model precision and loading settings
+precision: "bf16"
+trust_remote_code: True
+is_lora: false
+# Rank of the LoRA adapters, used only when is_lora is true. Present so
+# `actor.model.lora_rank=` is an override rather than an append; get_model
+# reads cfg.lora_rank unconditionally once is_lora is set.
+lora_rank: 32
+
+# Which parts of the Eagle2 backbone receive gradients. Both False keeps RL to
+# the action head (1.07B of 2.72B params) and matches the behaviour these values
+# were hardcoded to before they were configurable. Turning them on trains the
+# vision tower (0.43B) and the language model (1.22B) as well, which is what the
+# pi0.5 arms do -- but it roughly doubles step time and needs a smaller
+# micro_batch_size, since the backbone must now retain activations.
+tune_visual: False
+tune_llm: False
+
+# Action and policy settings
+action_dim: 7
+num_action_chunks: 5
+denoising_steps: 4
+policy_setup: "widowx_bridge"
+
+# Observation and embodiment settings
+obs_converter_type: "libero"
+embodiment_tag: "libero_franka"
+add_value_head: True
+
+# RL head configuration
+rl_head_config:
+  joint_logprob: False
+  noise_method: "flow_sde"
+  ignore_last: False
+  safe_get_logprob: False
+  noise_anneal: False
+  noise_params: [0.7, 0.3, 400]
+  noise_level: 0.5
+  add_value_head: ${..add_value_head}
+  chunk_critic_input: False
+  detach_critic_input: True
+  disable_dropout: True
+  use_vlm_value: False
+  value_vlm_mode: "mean_token"
+  padding_value: 570

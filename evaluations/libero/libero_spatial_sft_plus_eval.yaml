@@ -1,0 +1,77 @@
+# pi0 (OpenPI) SFT BASELINE evaluated on LIBERO-Plus (OOD).
+#
+# Same protocol as libero_spatial_openpi_plus_eval.yaml, but evaluates the base
+# SFT model with NO RL checkpoint (runner.ckpt_path: null), so it's the pre-RL
+# reference point for the RL-trained epoch-500 run. Keep total_num_envs and
+# rollout_epoch identical to the RL config so the two numbers are comparable.
+defaults:
+  - env/libero_spatial@env.eval
+  - model/pi0@rollout.model
+  - override hydra/job_logging: stdout
+
+hydra:
+  run:
+    dir: .
+  output_subdir: null
+  searchpath:
+    - file://${oc.env:EMBODIED_PATH}/config/
+
+cluster:
+  num_nodes: 1
+  component_placement:
+    env,rollout: all
+
+runner:
+  task_type: embodied_eval
+  logger:
+    log_path: "../results"
+    project_name: rl_inf
+    experiment_name: "libero_spatial_plus_sft_eval"
+    logger_backends: ["wandb"]
+
+  max_epochs: 1000
+  max_steps: -1
+
+  only_eval: True
+  val_check_interval: -1
+  save_interval: -1
+
+  resume_dir: null
+  # SFT baseline: no RL checkpoint. When ckpt_path is null the rollout worker uses
+  # the SFT weights loaded from rollout.model.model_path and skips the RL load
+  # (huggingface_worker.py:142), so this measures the pre-RL model.
+  ckpt_path: null
+
+env:
+  group_name: "EnvGroup"
+
+  eval:
+    libero_variant: plus
+    # Full sweep of all 2402 LIBERO-Plus tasks, one trial each (ceil(2402/32)).
+    # Must match the RL config for a fair comparison.
+    rollout_epoch: 76
+    total_num_envs: 32
+    auto_reset: True
+    ignore_terminations: True
+    max_episode_steps: 320
+    max_steps_per_rollout_epoch: 320
+    group_size: 1
+    use_fixed_reset_state_ids: True
+    is_eval: True
+    video_cfg:
+      save_video: False
+      video_base_dir: ${runner.logger.log_path}/video/eval
+
+rollout:
+  group_name: "RolloutGroup"
+  generation_backend: "huggingface"
+  recompute_logprobs: False
+  enable_offload: False
+  pipeline_stage_num: 2
+
+  model:
+    model_path: "/scratch/USER/rl_inf/models/RLinf-Pi0-LIBERO-Spatial-Object-Goal-SFT"
+    num_action_chunks: 5
+    # No RL checkpoint is loaded here, so the SFT model has no value head; don't
+    # build one (the RL config sets this True only to match its strict ckpt load).
+    add_value_head: False

@@ -1,0 +1,103 @@
+# Periodic out-of-distribution eval on LIBERO-Plus, logged under eval_ood/* .
+#
+# Include from a training config with:
+#   defaults:
+#     - env/libero_plus_ood@env.eval_ood
+# then override task_suite_name (and rollout_epoch, if the suite's axis sizes
+# differ) in the including config.
+#
+# Runs in its own worker group: rlinf/envs/libero/libero_env.py resolves
+# LIBERO_TYPE at module import time and it selects which Benchmark class is
+# imported, so one process cannot host both standard and plus envs. Training
+# and the in-distribution eval stay on standard LIBERO.
+#
+# Five of the seven LIBERO-Plus axes. Measured on 2432-episode full-suite
+# sweeps at ~93-95% in-distribution success:
+#              textures lighting layout camera noise robot_init language
+#   pi0  SFT       37%      36%    22%     0%    0%        0%        -
+#   pi0.5 SFT      89%      86%    80%    17%   15%       15%      69%
+# camera and noise were originally excluded because pi0 sits at exactly 0% on
+# them -- no dynamic range. For pi0.5 they are the axes that actually matter:
+# 15-17% against ~93% in-distribution, a ~76-point gap, where textures and
+# lighting have only a few points of headroom left.
+# Still excluded: robot_init (not a visual shift, so no image augmentation can
+# address it) and language (image augmentation cannot affect it).
+enable: True
+group_name: "EnvOODGroup"
+axes: ["textures", "lighting", "layout", "camera", "noise"]
+# Fraction of each axis to evaluate periodically. Drawn once from a fixed seed
+# in libero_plus_axes.SUBSAMPLE_SEED -- never the run seed -- so every run and
+# every arm scores the identical subset. Sampled per axis, so axis proportions
+# are preserved. Five axes in full are ~1700 tasks per eval; a quarter is ~440,
+# which is cheaper than the three full axes this replaces. Set 1.0 for a
+# full-suite eval on a final checkpoint.
+subsample_frac: 0.25
+# Suite whose LIBERO-Plus perturbations are evaluated. Override per config.
+task_suite_name: libero_spatial
+# Path to LIBERO-Plus benchmark/task_classification.json. null = auto-discover
+# (LIBERO_PLUS_TASK_CLASSIFICATION, LIBERO_PLUS_ROOT, REPO_PATH/venv-pi, then
+# the installed liberoplus package).
+task_classification_path: null
+
+# Set LIBERO_TYPE for this group's worker processes only. MAGICK_HOME must be
+# exported by the launch script; python-wand needs it to import liberoplus.
+env_vars:
+  LIBERO_TYPE: plus
+  LIBERO_SUFFIX: all
+
+# Per-task results always go to <log_path>/ood_eval/step_<N>.jsonl (~100 KB per
+# eval point). Set True to additionally emit one wandb series per task (~935).
+log_per_task_wandb: False
+
+env_type: libero
+# total_num_envs x rollout_epoch must cover every selected task at least once.
+# At subsample_frac 0.25 that is ~416 (spatial) to ~443 (goal) tasks, so 12
+# epochs x 40 envs = 480 covers the largest suite. Deliberately fewer envs than
+# the in-distribution eval: this group's MuJoCo/EGL contexts stay resident for
+# the whole run alongside the train and eval envs, and 100 here drove the actor
+# into CUDA OOM.
+rollout_epoch: 12
+total_num_envs: 40
+# Allow total_num_envs x rollout_epoch < the task pool. Only for smoke tests:
+# the pool is ordered by task id, so a short pass covers one axis rather than a
+# representative sample. Real runs must keep this False.
+allow_partial_coverage: False
+auto_reset: True
+ignore_terminations: True
+# 240 to match the in-distribution eval rather than the LIBERO-Plus default of
+# 320: keeps the two directly comparable and cuts the OOD eval cost by 25%.
+max_episode_steps: 240
+max_steps_per_rollout_epoch: 240
+group_size: 1
+is_eval: True
+seed: 0
+use_fixed_reset_state_ids: True
+use_ordered_reset_state_ids: False
+specific_reset_id: null
+use_rel_reward: True
+use_step_penalty: False
+reward_coef: 1.0
+reset_gripper_open: True
+libero_variant: plus
+init_params:
+  camera_heights: 256
+  camera_widths: 256
+video_cfg:
+  # A bounded sample of OOD clips per eval point, so every axis can be eyeballed
+  # for the perturbation actually being applied (the textures/lighting bug in
+  # libero_env.get_env_fn_params went unseen for weeks because nobody looked).
+  # ~480 episodes per eval point across 4 ranks: keep 1 in 12, at most 10 per
+  # rank, so about 40 clips spread over all five axes. Lands under
+  # runner.logger.log_path, which is project space.
+  save_video: True
+  # flush_video is called once per env rank+stage per eval point and writes ONE
+  # mp4 holding that worker's whole pass, so an eval point yields ~8 clips, not
+  # ~480. The sampling knobs below therefore count FLUSHES, not episodes:
+  # video_sample_every 12 kept only every 12th eval point (i.e. one batch at
+  # epoch 25 and then nothing until epoch 325), and max_videos_per_epoch never
+  # reset because the OOD group's flush passes no epoch, so the cap was a
+  # once-per-run budget. 1 and null give ~8 clips at every eval point.
+  video_sample_every: 1
+  max_videos_per_epoch: null
+  info_on_video: True
+  video_base_dir: ${runner.logger.log_path}/video/eval_ood
