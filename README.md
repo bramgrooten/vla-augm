@@ -2,9 +2,9 @@
 
 **Bram Grooten, Joaquin Vanschoren** · TU Eindhoven
 
-NeurIPS 2026 Workshop on Post-Training Adaptation of Robot Foundation Models (RoboPAD)
+NeurIPS 2026 Workshop RoboPAD: Post-Training Adaptation of Robot Foundation Models
 
-[Project page](https://bramgrooten.nl/vla-augm/) · Paper: coming soon
+[Project page](https://bramgrooten.nl/vla-augm/) · [Paper on arXiv](https://arxiv.org/abs/2610.05994)
 
 Code for the paper. We post-train two vision-language-action models, π0.5 and
 GR00T N1.5, with PPO on LIBERO-Spatial and measure out-of-distribution success on
